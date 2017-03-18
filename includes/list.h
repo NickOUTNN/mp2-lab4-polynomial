@@ -1,5 +1,10 @@
 #pragma once
-#include "node.h"
+template <class Data>
+struct Node
+{
+	Data data;
+	Node* next;
+};
 template <class Data>
 class List
 {

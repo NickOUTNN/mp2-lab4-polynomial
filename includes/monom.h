@@ -5,5 +5,5 @@ public:
 	Monom();
 	~Monom();
 private:
-
+	int power;
 };
