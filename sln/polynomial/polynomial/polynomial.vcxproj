@@ -21,7 +21,6 @@
   <ItemGroup>
     <ClInclude Include="..\..\..\includes\list.h" />
     <ClInclude Include="..\..\..\includes\monom.h" />
-    <ClInclude Include="..\..\..\includes\node.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\monom.cpp" />

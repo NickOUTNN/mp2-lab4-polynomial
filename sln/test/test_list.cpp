@@ -1,6 +1,4 @@
 #include "gtest.h"
-#include <iostream>
-using namespace std;
 #include "list.h"
 
 TEST(list, canPush)
@@ -30,8 +28,4 @@ TEST(list, reverce)
 	l.reverce();
 	for (int i = 0; i< 10; i++)
 		EXPECT_EQ(l.quick_pop_front(), i);
-}
-TEST(_end, end)
-{
-	system("pause");
 }

@@ -6,6 +6,7 @@ struct Node
 	Node* next;
 };
 template <class Data>
+
 class List
 {
 protected:

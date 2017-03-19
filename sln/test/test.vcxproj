@@ -113,7 +113,7 @@
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>gtest.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>gtest.lib;polynomial.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>../polynomial/x64/Release;</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -121,6 +121,14 @@
     <ClCompile Include="test_list.cpp" />
     <ClCompile Include="test_main.cpp" />
     <ClCompile Include="test_monom.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\gtest\gtest.vcxproj">
+      <Project>{20892c72-f513-40de-8875-71d5ef76993b}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\polynomial\polynomial\polynomial.vcxproj">
+      <Project>{c47d78fe-853a-42e8-8687-236f14526a65}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

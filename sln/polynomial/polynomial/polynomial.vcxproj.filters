@@ -21,9 +21,6 @@
     <ClInclude Include="..\..\..\includes\list.h">
       <Filter>structs</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\includes\node.h">
-      <Filter>structs</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\includes\monom.h">
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
