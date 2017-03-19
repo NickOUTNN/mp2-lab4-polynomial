@@ -57,6 +57,7 @@ Polynom& Polynom::operator+(const Polynom &pol)
 }
 ostream& operator<<(ostream& os, const Polynom &pol)
 {
-	
+	Node<Monom> *p1 = pol.listM.GetpTop();
+	Monom *m1 = &(p1->data);
 	return os;
 }
