@@ -21,9 +21,11 @@
   <ItemGroup>
     <ClInclude Include="..\..\..\includes\list.h" />
     <ClInclude Include="..\..\..\includes\monom.h" />
+    <ClInclude Include="..\..\..\includes\polynom.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\monom.cpp" />
+    <ClCompile Include="..\..\..\src\Polynom.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{C47D78FE-853A-42E8-8687-236F14526A65}</ProjectGuid>

@@ -1,5 +1,5 @@
 #include "monom.h"
-Monom::Monom(): power(0), coef(0){}
+Monom::Monom(): name("") ,power(0), maxpower(0), coef(0){}
 Monom::Monom(string _name, int _power, int _maxpower, double _coef): 
 	 name(_name), power(_power), maxpower(_maxpower), coef(_coef) {}
 Monom::~Monom()
@@ -25,6 +25,10 @@ bool Monom::CorrectMulty(const Monom &m)
 int local::GetPower(int mypow, int maxPower, int index)
 {
 	return (mypow % (int)pow(maxPower, (index + 1)) / pow(maxPower, index));
+}
+bool Monom::EqPow(const Monom &m)
+{
+	return (power == m.power);
 }
 
 Monom& Monom::operator=(const Monom &m)
@@ -71,9 +75,17 @@ Monom& Monom::operator*(const Monom &m)
 	}
 	throw error_operation;
 }
+bool Monom::operator<(const Monom &m)
+{
+	return power < m.power;
+}
 bool operator==(const Monom &m1, const Monom &m2)
 {
 	return (m1.name == m2.name && m1.coef == m2.coef && m1.power == m2.power || m1.coef == 0 && m2.coef == 0);
+}
+bool operator!=(const Monom &m1, const Monom &m2)
+{
+	return (!(m1 == m2));
 }
 ostream& operator<<(ostream& os, const Monom &m)
 {

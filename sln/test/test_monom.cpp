@@ -39,7 +39,3 @@ TEST(Monom, monom_can_add)
 	Monom m("abcd", 10213300, 100, -3.14);
 	std::cout << m;
 }*/
-TEST(_end, end)
-{
-	system("pause");
-}
