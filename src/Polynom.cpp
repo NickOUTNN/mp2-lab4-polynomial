@@ -15,6 +15,12 @@ Polynom& Polynom::operator=(const Polynom &p)
 	listM = p.listM;
 	return *this;
 }
+bool Polynom::IsPositive() const
+{
+	if (!listM.isEmpty())
+		return listM.GetpTop()->data.IsPositive();
+	else return false;
+}
 bool operator==(const Polynom &p1, const Polynom &p2)
 {
 	return (p1.name == p2.name && p1.maxpower == p2.maxpower && p1.listM == p2.listM);
@@ -58,6 +64,19 @@ Polynom& Polynom::operator+(const Polynom &pol)
 ostream& operator<<(ostream& os, const Polynom &pol)
 {
 	Node<Monom> *p1 = pol.listM.GetpTop();
-	Monom *m1 = &(p1->data);
+	Monom *m1;
+	if (p1 != 0)
+	{
+		m1 = &(p1->data);
+		os << *m1;
+		p1 = p1->next;
+	}
+	while (p1 != 0)
+	{
+		m1 = &(p1->data);
+		if (m1->IsPositive()) os << '+';
+		os << *m1;
+		p1 = p1->next;
+	}
 	return os;
 }

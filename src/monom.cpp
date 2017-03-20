@@ -22,6 +22,10 @@ bool Monom::CorrectMulty(const Monom &m)
 	}
 	return true;
 }
+bool Monom::IsPositive()
+{
+	return (coef > 0);
+}
 int local::GetPower(int mypow, int maxPower, int index)
 {
 	return (mypow % (int)pow(maxPower, (index + 1)) / pow(maxPower, index));
@@ -90,7 +94,10 @@ bool operator!=(const Monom &m1, const Monom &m2)
 ostream& operator<<(ostream& os, const Monom &m)
 {
 	if (m.coef == 0)
+	{
+		os << '0';
 		return os;
+	}
 	if (m.coef != 1)
 		os << m.coef;
 	for (int i = 0; i < m.name.length(); i++)
@@ -98,8 +105,9 @@ ostream& operator<<(ostream& os, const Monom &m)
 		int curP = local::GetPower(m.power, m.maxpower, i);
 		if (curP != 0)
 		{
-			if (i != 0 || m.coef != 1)
-			os << '*'; //вывод умножения между переменными
+			if (m.coef != 1 && i!= 0)
+				os << '*'; //вывод умножения между переменными
+
 			os << m.name[i];
 			if (curP != 1)
 			{

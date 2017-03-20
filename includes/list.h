@@ -24,7 +24,7 @@ public:
 		}
 	}
 
-	bool isEmpty() { return (head == 0); }
+	bool isEmpty() const { return (head == 0); }
 
 	Data quick_pop_front()
 	{

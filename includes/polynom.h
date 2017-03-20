@@ -17,6 +17,7 @@ public:
 	Polynom& operator+(const Polynom &p);
 	Polynom& operator-(const Polynom &p);
 	Polynom& operator*(const Polynom &p);
+	bool IsPositive() const;
 	friend bool operator==(const Polynom &p1, const Polynom &p2);
 	friend ostream& operator<<(ostream& os, const Polynom &p);
 	friend ostream& operator>>(istream& os, const Polynom &p);

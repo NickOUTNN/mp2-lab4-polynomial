@@ -25,6 +25,7 @@ public:
 	bool IsCorrect(const Monom &m);
 	bool CorrectMulty(const Monom &m);
 	bool EqPow(const Monom &m);
+	bool IsPositive();
 
 	Monom& operator=(const Monom &m);
 	Monom& operator+(const Monom &m);
