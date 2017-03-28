@@ -9,7 +9,7 @@ using std::istream;
 
 namespace local
 {
-	int GetPower(int mypow, int maxPower, int index);
+	int GetPower(int mypow, int maxPower, int index, int numBits);
 }
 class Monom
 {
@@ -26,6 +26,7 @@ public:
 	bool CorrectMulty(const Monom &m);
 	bool EqPow(const Monom &m);
 	bool IsPositive();
+	int GetPowerOfVar(int index) const;
 
 	Monom& operator=(const Monom &m);
 	Monom& operator+(const Monom &m);

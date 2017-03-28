@@ -6,15 +6,31 @@ TEST(Monom, canCreate)
 }
 TEST(Monom, GetPower_work)
 {
-	Monom m("abcd", 10213300, 100, -3.14);
-	int t = local::GetPower(10213300, 100, 1);
-	ASSERT_EQ(local::GetPower(10213300, 100, 0), 0);
-	ASSERT_EQ(local::GetPower(10213300, 100, 1), 33);
-	ASSERT_EQ(local::GetPower(10213300, 100, 2), 21);
-	ASSERT_EQ(local::GetPower(10213300, 100, 3), 10);
+	Monom m("abcd", 11220044, 100, -3.14);
+	ASSERT_EQ(local::GetPower(11220044, 100, 0, 4), 11);
+	ASSERT_EQ(local::GetPower(11220044, 100, 1, 4), 22);
+	ASSERT_EQ(local::GetPower(11220044, 100, 2, 4), 00);
+	ASSERT_EQ(local::GetPower(11220044, 100, 3, 4), 44);
 	std::cout << m;
 }
-
+TEST(Monom, GetPower_work2)
+{
+	Monom m("abcde", 103, 10, -3.14);
+	ASSERT_EQ(local::GetPower(10300, 10, 0, 5), 1);
+	ASSERT_EQ(local::GetPower(10300, 10, 1, 5), 0);
+	ASSERT_EQ(local::GetPower(10300, 10, 2, 5), 3);
+	ASSERT_EQ(local::GetPower(10300, 10, 3, 5), 0);
+	std::cout << m;
+}
+TEST(Monom, GetPowerInMonom_work)
+{
+	Monom m("abcde", 103, 10, -3.14);
+	ASSERT_EQ(m.GetPowerOfVar(0), 1);
+	ASSERT_EQ(m.GetPowerOfVar(1), 0);
+	ASSERT_EQ(m.GetPowerOfVar(2), 3);
+	ASSERT_EQ(m.GetPowerOfVar(3), 0);
+	std::cout << m;
+}
 TEST(Monom, monom_assignment_work)
 {
 	Monom m("abcd", 10213300, 100, -3.14), m_c("a", 12345, 100000, 1);

@@ -1,7 +1,19 @@
 #include "monom.h"
 Monom::Monom(): name("") ,power(0), maxpower(0), coef(0){}
 Monom::Monom(string _name, int _power, int _maxpower, double _coef): 
-	 name(_name), power(_power), maxpower(_maxpower), coef(_coef) {}
+	 name(_name), maxpower(_maxpower), coef(_coef) 
+{
+	power = 0;
+	int curBit = 1, count = name.length();
+	while (_power > 0)
+	{
+		power += curBit*(_power % maxpower);
+		_power /= maxpower; 
+		curBit *= maxpower;
+		count--;
+	}
+	power *= pow(maxpower, count);
+}
 Monom::~Monom()
 {
 	
@@ -15,8 +27,8 @@ bool Monom::CorrectMulty(const Monom &m)
 {
 	for (int i = 0; i < name.length(); i++)
 	{
-		int a = local::GetPower(power, maxpower, i);
-		int b = local::GetPower(m.power, m.maxpower, i);
+		int a = GetPowerOfVar(i);
+		int b = m.GetPowerOfVar(i);
 		if ((a + b) > maxpower)
 			return false;
 	}
@@ -26,13 +38,17 @@ bool Monom::IsPositive()
 {
 	return (coef > 0);
 }
-int local::GetPower(int mypow, int maxPower, int index)
+int local::GetPower(int mypow, int maxPower, int index, int numBits)
 {
-	return (mypow % (int)pow(maxPower, (index + 1)) / pow(maxPower, index));
+	return ((mypow % (int)pow(maxPower, numBits - index)) / pow(maxPower, numBits - index - 1));
 }
 bool Monom::EqPow(const Monom &m)
 {
 	return (power == m.power);
+}
+int Monom::GetPowerOfVar(int index) const
+{
+	return ((power % (int)pow(maxpower, name.length() - index)) / pow(maxpower, name.length() - index - 1));
 }
 
 Monom& Monom::operator=(const Monom &m)
@@ -102,7 +118,7 @@ ostream& operator<<(ostream& os, const Monom &m)
 		os << m.coef;
 	for (int i = 0; i < m.name.length(); i++)
 	{
-		int curP = local::GetPower(m.power, m.maxpower, i);
+		int curP = m.GetPowerOfVar(i);
 		if (curP != 0)
 		{
 			if (m.coef != 1 && i!= 0)
