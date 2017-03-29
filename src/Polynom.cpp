@@ -21,17 +21,20 @@ bool Polynom::IsPositive() const
 		return listM.GetpTop()->data.IsPositive();
 	else return false;
 }
+Monom* Polynom::GetCurMonom()
+{
+	return &(listM.GetCursor()->data);
+}
 bool operator==(const Polynom &p1, const Polynom &p2)
 {
 	return (p1.name == p2.name && p1.maxpower == p2.maxpower && p1.listM == p2.listM);
 }
-Polynom& Polynom::operator+(const Polynom &pol)
+Polynom& Polynom::operator+(Polynom &pol)
 {
+
+
 	Node<Monom> *p1, *p2, *p = 0;
-	p1 = listM.GetpTop();
-	p2 = pol.listM.GetpTop();
-	Monom *m1 = &(p1->data);
-	Monom *m2 = &(p2->data);
+	Monom *m1, *m2;
 	while (p1 && p2)
 	{
 		m1 = &(p1->data);

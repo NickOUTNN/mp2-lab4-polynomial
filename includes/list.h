@@ -12,6 +12,9 @@ class List
 protected:
 	Node <Data> *head;
 	Node <Data> *end;
+
+	Node <Data> *cursor;
+	Node <Data> *preCursor;
 public:
 	List() : head(0), end(0) {};
 	List(List &l)
@@ -73,7 +76,11 @@ public:
 			end = newNode;
 		}
 	}
-	void push_after(Node<Data> *p, Data d)
+	void setCursor() const
+	{
+		cursor = head;
+	}
+	/*void push_after(Node<Data> *p, Data d)
 	{
 		Node<Data> *newNode = new Node<Data>;
 		newNode->data = d;
@@ -89,7 +96,7 @@ public:
 			end = newNode;
 			head = newNode;
 		}
-	}
+	}*/
 
 	int reverce()
 	{

@@ -40,7 +40,7 @@ bool Monom::IsPositive()
 }
 int local::GetPower(int mypow, int maxPower, int index, int numBits)
 {
-	return ((mypow % (int)pow(maxPower, numBits - index)) / pow(maxPower, numBits - index - 1));
+	return ((mypow % (int)pow(maxPower, numBits - index)) / (int)pow(maxPower, numBits - index - 1));
 }
 bool Monom::EqPow(const Monom &m)
 {
@@ -48,7 +48,7 @@ bool Monom::EqPow(const Monom &m)
 }
 int Monom::GetPowerOfVar(int index) const
 {
-	return ((power % (int)pow(maxpower, name.length() - index)) / pow(maxpower, name.length() - index - 1));
+	return ((power % (int)pow(maxpower, name.length() - index)) / (int)pow(maxpower, name.length() - index - 1));
 }
 
 Monom& Monom::operator=(const Monom &m)
