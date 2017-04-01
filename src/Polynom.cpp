@@ -1,11 +1,16 @@
 #include "polynom.h"
+#define NodeM Node<Monom> 
+#define curMon GetCurMonom()
 Polynom::Polynom() : name(""), maxpower(0)
 {
 	Monom m;
 	listM.push_front(m);
+	listM.setCursor();
 }
-
-Polynom::Polynom(string _name, int _maxpower, List<Monom> &l): name(_name), maxpower(_maxpower), listM(l){}
+Polynom::Polynom(string _name, int _maxpower, List<Monom> &l): name(_name), maxpower(_maxpower), listM(l)
+{
+	l.setCursor();
+}
 Polynom& Polynom::operator=(const Polynom &p)
 {
 	if (this == &p)
@@ -13,6 +18,7 @@ Polynom& Polynom::operator=(const Polynom &p)
 	name = p.name;
 	maxpower = p.maxpower;
 	listM = p.listM;
+	listM.setCursor();
 	return *this;
 }
 bool Polynom::IsPositive() const
@@ -25,44 +31,67 @@ Monom* Polynom::GetCurMonom()
 {
 	return &(listM.GetCursor()->data);
 }
-bool operator==(const Polynom &p1, const Polynom &p2)
+
+void Polynom::SetCurMonom()
 {
-	return (p1.name == p2.name && p1.maxpower == p2.maxpower && p1.listM == p2.listM);
+	listM.setCursor();
 }
+
+void Polynom::InsMonAfterCur(Monom *m)
+{
+	listM.push_after_cursor(m);
+}
+void Polynom::InsMonBeforeCur(Monom * m)
+{
+	listM.push_before_cursor(m);
+}
+bool Polynom::NextMonom()
+{
+	return listM.MoveCursor();
+}
+
 Polynom& Polynom::operator+(Polynom &pol)
 {
-
-
-	Node<Monom> *p1, *p2, *p = 0;
-	Monom *m1, *m2;
-	while (p1 && p2)
+	SetCurMonom();
+	pol.SetCurMonom();
+	Monom *m1 = GetCurMonom(), *m2 = pol.GetCurMonom();
+	if (m1 && m2)
+	while (1)
 	{
-		m1 = &(p1->data);
-		m2 = &(p2->data);
 		if (*m1 < *m2)
 		{
-			//insert m2
-			p2 = p2->next;
+			InsMonBeforeCur(m2);
+			if (!pol.NextMonom())
+				break;
 		}
-		else if (m1->EqPow(*m2))
-		{
+		else if (m1->EqPow(*m2)) // m1 == m2
+		{	
 			*m1 = *m1 + *m2;
-			p = p1;
-			p1 = p1->next;
-			p2 = p2->next;
+			if (!NextMonom())
+			{
+				while (pol.NextMonom())
+					InsMonAfterCur(m2);
+				break;
+			}				
+			if (!pol.NextMonom())
+				break;
 		}
-		else
+		else // m1 > m2
 		{
-			p = p1;
-			p1 = p1->next;
+			if (!NextMonom())
+				break;
 		}
 	}
-	while (p2 != 0)
+	if (!NextMonom())
 	{
-		listM.push_back(p2->data);
-		p2 = p2->next;
+		while (pol.NextMonom())
+			InsMonAfterCur(m2);
 	}
 	return *this;
+}
+bool operator==(const Polynom & p1, const Polynom & p2)
+{
+	return (p1.name == p2.name && p1.maxpower == p2.maxpower && p1.listM == p2.listM);
 }
 ostream& operator<<(ostream& os, const Polynom &pol)
 {

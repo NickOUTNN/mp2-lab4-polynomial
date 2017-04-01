@@ -4,7 +4,7 @@ Monom::Monom(string _name, int _power, int _maxpower, double _coef):
 	 name(_name), maxpower(_maxpower), coef(_coef) 
 {
 	power = 0;
-	int curBit = 1, count = name.length();
+	int curBit = 1, count = name.length(); // curBit - текущий разряд
 	while (_power > 0)
 	{
 		power += curBit*(_power % maxpower);

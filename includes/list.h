@@ -11,12 +11,12 @@ class List
 {
 protected:
 	Node <Data> *head;
-	Node <Data> *end;
+	Node <Data> *tail;
 
 	Node <Data> *cursor;
 	Node <Data> *preCursor;
 public:
-	List() : head(0), end(0) {};
+	List() : head(0), tail(0) {};
 	List(List &l)
 	{
 		Node<Data> *p = l.head;
@@ -42,7 +42,7 @@ public:
 		{
 			delete head;
 			head = 0;
-			end = 0;
+			tail = 0;
 		}
 		return tmp.data;
 	}
@@ -50,14 +50,25 @@ public:
 	{
 		return head;
 	}
+	Node<Data>* GetCursor() const
+	{
+		return cursor;
+	}
+	bool MoveCursor()
+	{
+		preCursor = cursor;
+		if (cursor != 0)
+		cursor = cursor->next;
+		return (cursor != 0);
+	}
 
 	void push_front(Data obj)
 	{
 		Node<Data> *newNode = new Node<Data>;
 		newNode->data = obj;
 		newNode->next = head;
-		if (end == 0)
-			end = head;
+		if (tail == 0)
+			tail = head;
 		head = newNode;
 	}
 	void push_back(Data obj)
@@ -65,38 +76,47 @@ public:
 		Node<Data> *newNode = new Node<Data>;
 		newNode->data = obj;
 		newNode->next = 0;
-		if (end == 0)
+		if (tail == 0)
 		{
-			end = newNode;
+			tail = newNode;
 			head = newNode;
 		}
 		else 
 		{
-			end->next = newNode;
-			end = newNode;
+			tail->next = newNode;
+			tail = newNode;
 		}
 	}
-	void setCursor() const
+	void setCursor()
 	{
 		cursor = head;
+		preCursor = 0;
 	}
-	/*void push_after(Node<Data> *p, Data d)
+	void push_after_cursor(Data *p)
 	{
 		Node<Data> *newNode = new Node<Data>;
-		newNode->data = d;
-		if (p != 0)
-		{			
-			if (p->next = 0)
-				end = newNode;
-			newNode->next = p->next;
-			p->next = newNode;
-		}
-		else
+		newNode->data = *p;		
+		if (cursor != 0)
 		{
-			end = newNode;
-			head = newNode;
+			newNode->next = cursor->next;
+			cursor->next = newNode;
 		}
-	}*/
+		else 
+			cursor = newNode;
+	}
+	void push_before_cursor(Data *p)
+	{
+		Node<Data> *newNode = new Node<Data>;
+		newNode->data = *p;
+		newNode->next = cursor;
+
+		if (preCursor != 0)
+			preCursor->next = newNode;
+		else //вставка в начало списка
+			head = newNode;
+
+		preCursor = newNode;
+	}
 
 	int reverce()
 	{
@@ -106,7 +126,7 @@ public:
 		if (head)
 		{
 			next = head->next;
-			end = head;
+			tail = head;
 		}
 		while (next != 0)
 		{
@@ -153,6 +173,8 @@ public:
 		}
 		return (p1 == 0 && p2 == 0);
 	}
+
+	friend class test;
 	~List()
 	{
 		Node <Data> *tmp;

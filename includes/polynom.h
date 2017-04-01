@@ -7,18 +7,24 @@ private:
 	List <Monom> listM;
 	int maxpower;
 	string name;
-	Polynom(const Polynom &l);
 	Polynom(Polynom &l);
+
+	Monom* GetCurMonom();
+	void SetCurMonom();
+	void InsMonAfterCur(Monom* m);
+	void InsMonBeforeCur(Monom* m);
+	bool NextMonom();
 public:
 	Polynom();
 	Polynom(string _name, int _maxpower, List<Monom> &l);
 
 	Polynom& operator=(const Polynom &p);
-	Polynom& operator+(const Polynom &p);
+	Polynom& operator+(Polynom &p);
 	Polynom& operator-(const Polynom &p);
 	Polynom& operator*(const Polynom &p);
 
 	bool IsPositive() const;
+
 	friend bool operator==(const Polynom &p1, const Polynom &p2);
 	friend ostream& operator<<(ostream& os, const Polynom &p);
 	friend ostream& operator>>(istream& os, const Polynom &p);
