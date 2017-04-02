@@ -16,8 +16,9 @@ protected:
 	Node <Data> *cursor;
 	Node <Data> *preCursor;
 public:
-	List() : head(0), tail(0) {};
-	List(List &l)
+	int length;
+	List() : head(0), tail(0), length(0) {};
+	List(List &l) 
 	{
 		Node<Data> *p = l.head;
 		while (p!=0)
@@ -44,6 +45,7 @@ public:
 			head = 0;
 			tail = 0;
 		}
+		length--;
 		return tmp.data;
 	}
 	Node<Data>* GetpTop() const
@@ -70,6 +72,7 @@ public:
 		if (tail == 0)
 			tail = head;
 		head = newNode;
+		length++;
 	}
 	void push_back(Data obj)
 	{
@@ -86,6 +89,7 @@ public:
 			tail->next = newNode;
 			tail = newNode;
 		}
+		length++;
 	}
 	void setCursor()
 	{
@@ -103,6 +107,7 @@ public:
 		}
 		else 
 			cursor = newNode;
+		length++;
 	}
 	void push_before_cursor(Data *p)
 	{
@@ -116,6 +121,7 @@ public:
 			head = newNode;
 
 		preCursor = newNode;
+		length++;
 	}
 
 	int reverce()
@@ -152,13 +158,15 @@ public:
 			head = head->next;
 			delete tmp;
 		}
+		tail = 0;
 		//fill
-		Node<Data> *p = l.head;
-		while (p != 0)
+		tmp = l.head;
+		while (tmp != 0)
 		{
-			push_back(p->data);
-			p = p->next;
+			push_back(tmp->data);
+			tmp = tmp->next;
 		}
+		//head = l.head;
 		return *this;
 	}
 	friend bool operator ==(const List<Data> &l1, const List<Data> &l2)

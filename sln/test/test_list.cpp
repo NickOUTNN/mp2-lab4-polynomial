@@ -15,6 +15,14 @@ public:
 	}
 	test(List<int> *l1) : l (l1) {}
 };
+
+TEST(list, push_back)
+{
+	List <int>l;
+	l.push_back(2);
+	List <int> l2 = l;
+	EXPECT_EQ(2, l2.quick_pop_front());
+}
 TEST(list, canPush)
 {
 	List <int>l;

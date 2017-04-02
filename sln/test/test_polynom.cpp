@@ -70,7 +70,7 @@ TEST(polynom, can_add1)
 	Polynom pol1("abcde", 10, l1);
 	Polynom pol2("abcde", 10, l2);
 
-	pol1 = pol1 + pol2;
+	pol1 += pol2;
 	cout << pol1;
 }
 
@@ -82,9 +82,8 @@ TEST(polynom, can_add2)
 	l2.push_back(m2);
 	Polynom pol1("abcde", 10, l1);
 	Polynom pol2("abcde", 10, l2);
-
-	pol1 = pol1 + pol2;
-	cout << pol1;
+	pol2 = pol1 + pol2;
+	cout << pol2 <<'\n';
 }
 
 

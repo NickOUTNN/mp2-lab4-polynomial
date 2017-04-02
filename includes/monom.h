@@ -20,6 +20,7 @@ private:
 	double coef;
 public:
 	Monom();
+	Monom(Monom &m);
 	Monom(string _name, int _power, int _maxpower, double _coef);
 	~Monom();
 	bool IsCorrect(const Monom &m);
@@ -29,9 +30,9 @@ public:
 	int GetPowerOfVar(int index) const;
 
 	Monom& operator=(const Monom &m);
-	Monom& operator+(const Monom &m);
-	Monom& operator-(const Monom &m);
-	Monom& operator*(const Monom &m);
+	Monom operator+(const Monom &m);
+	Monom operator-(const Monom &m);
+	Monom operator*(const Monom &m);
 	bool operator<(const Monom &m);
 	friend bool operator==(const Monom &m1, const Monom &m2);
 	friend bool operator!=(const Monom &m1, const Monom &m2);
