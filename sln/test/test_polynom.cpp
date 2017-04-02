@@ -42,7 +42,6 @@ TEST(polynom, uneq_true)
 	cout << pol1 << '\n' << pol2;
 	EXPECT_FALSE(pol1 == pol2);
 }
-
 TEST(polynom, eq_true)
 {
 	List<Monom> l1, l2;
@@ -60,7 +59,6 @@ TEST(polynom, eq_true)
 	cout << pol1 << '\n' << pol2;
 	EXPECT_TRUE(pol1 == pol2);
 }
-
 TEST(polynom, can_add1)
 {
 	List<Monom> l1, l2;
@@ -73,7 +71,6 @@ TEST(polynom, can_add1)
 	pol1 += pol2;
 	cout << pol1;
 }
-
 TEST(polynom, can_add2)
 {
 	List<Monom> l1, l2;
@@ -85,7 +82,24 @@ TEST(polynom, can_add2)
 	pol2 = pol1 + pol2;
 	cout << pol2 <<'\n';
 }
-
+TEST(polynom, can_add3)
+{
+	List<Monom> l1, l2;
+	Monom m1("abcde", 11101, 10, 3), m2("abcde", 2, 10, 3), m3("abcde", 21, 10, 5);
+	l1.push_back(m2);
+	l1.push_back(m1);
+	l2.push_back(m3);
+	l2.push_back(m2);
+	Polynom pol1("abcde", 10, l1);
+	Polynom pol2("abcde", 10, l2);
+	cout << pol1 << '+' << pol2 << '=' << pol1 + pol2 << '\n';
+}
+TEST(polynom, can_create_pol)
+{
+	Monom m1("abcde", 11101, 10, 3), m2("abcde", 2, 10, 3), m3("abcde", 21, 10, 5);
+	//Polynom p1(3, &m1, &m2, &m3);
+	//cout << p1;
+}
 
 
 

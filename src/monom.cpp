@@ -1,8 +1,6 @@
 #include "monom.h"
 Monom::Monom(): name("") ,power(0), maxpower(0), coef(0){}
-Monom::Monom(Monom & m): name(m.name), power(m.power), maxpower(m.maxpower), coef(m.coef)
-{
-}
+Monom::Monom(Monom & m): name(m.name), power(m.power), maxpower(m.maxpower), coef(m.coef){}
 Monom::Monom(string _name, int _power, int _maxpower, double _coef): 
 	 name(_name), maxpower(_maxpower), coef(_coef) 
 {
@@ -17,8 +15,6 @@ Monom::Monom(string _name, int _power, int _maxpower, double _coef):
 	}
 	power *= pow(maxpower, count);
 }
-
-Monom::~Monom(){}
 
 bool Monom::IsCorrect(const Monom &m)
 {
@@ -38,10 +34,6 @@ bool Monom::CorrectMulty(const Monom &m)
 bool Monom::IsPositive()
 {
 	return (coef > 0);
-}
-int local::GetPower(int mypow, int maxPower, int index, int numBits)
-{
-	return ((mypow % (int)pow(maxPower, numBits - index)) / (int)pow(maxPower, numBits - index - 1));
 }
 bool Monom::EqPow(const Monom &m)
 {
@@ -64,37 +56,20 @@ Monom& Monom::operator=(const Monom &m)
 }
 Monom Monom::operator+(const Monom &m)
 {
-	if (IsCorrect(m))
-	{
-		Monom tmp(*this);
-		tmp.coef += m.coef;
-		return tmp;
-	}
-	throw error_operation;
+	Monom tmp(*this);
+	tmp.coef += m.coef;
+	return tmp;
 }
 Monom Monom::operator-(const Monom &m)
 {
-	if (IsCorrect(m))
-	{
-		if (m.power == power)
-			coef -= m.coef;
-		return *this;
-	}
-	throw error_operation;
+	coef -= m.coef;
+	return *this;
 }
 Monom Monom::operator*(const Monom &m)
 {
-	if (IsCorrect(m))
-	{
-		if (CorrectMulty(m))
-		{
-			power += m.power;
-			coef *= m.coef;
-			return *this;
-		}
-		throw error_max_power;
-	}
-	throw error_operation;
+	power += m.power;
+	coef *= m.coef;
+		return *this;
 }
 bool Monom::operator<(const Monom &m)
 {

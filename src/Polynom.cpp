@@ -17,6 +17,13 @@ Polynom::Polynom(Polynom &p)
 	maxpower = p.maxpower;
 	listM = p.listM;
 }
+Polynom::Polynom(int n, Monom *m)
+{
+	List <Monom>l;
+	for (int i = 0; i < n; i++)
+		l.push_back(m[i]);
+	Polynom(m->name, m->maxpower, l);
+}
 Polynom& Polynom::operator=(const Polynom &p)
 {
 	if (this == &p)
@@ -65,11 +72,6 @@ bool Polynom::IsCorrect(Polynom & p)
 bool Polynom::NextMonom()
 {
 	return listM.MoveCursor();
-}
-
-bool Polynom::NextMonom(Monom * m)
-{
-	return false;
 }
 
 Polynom& Polynom::operator+=(Polynom &pol)
@@ -162,27 +164,56 @@ Polynom Polynom::operator+(Polynom &pol)
 	
 	return polr;
 }
-Polynom Polynom::operator*(Polynom &pol)
+Polynom Polynom::operator-(Polynom & pol)
 {
 	Polynom polr;
-	SetCurMonom();
-	pol.SetCurMonom();
-	Monom **cur = new Monom*[pol.GetLength()];
-	for (int i = 0; i < pol.GetLength(); i++)
-		cur[i] = pol.GetCurMonom();
-	
-	Monom  *res1, *res2;
-	int num1 = 0, num2 = 1;
-	while (cur[GetLength() - 1])
+	if (IsCorrect(pol))
 	{
-		if (*res1 < *res2)
+		SetCurMonom();
+		pol.SetCurMonom();
+		Monom *m1 = GetCurMonom(), *m2 = pol.GetCurMonom();
+		while (m1 && m2)
 		{
-			polr.InsMonom(res2);
-			if (pol.NextMonom(cur[num2]))
-				*res2 = *cur[num1] * *cur[num2];
+			if (*m1 < *m2)
+			{
+				polr.InsMonom(m2);
+				pol.NextMonom();
+			}
+			else if (m1->EqPow(*m2))
+			{
+				polr.InsMonom(&(*m1 - *m2));
+				pol.NextMonom();
+				NextMonom();
+			}
+			else
+			{
+				polr.InsMonom(m1);
+				NextMonom();
+			}
+			m1 = GetCurMonom();
+			m2 = pol.GetCurMonom();
 		}
+		while (m1)
+		{
+			polr.InsMonom(m1);
+			NextMonom();
+			m1 = GetCurMonom();
+		}
+		while (m2)
+		{
+			polr.InsMonom(m2);
+			pol.NextMonom();
+			m2 = pol.GetCurMonom();
+		}
+		polr.name = name;
+		polr.maxpower = maxpower;
 	}
+
 	return polr;
+}
+Polynom Polynom::operator*(Polynom &pol)
+{
+	return Polynom();
 }
 bool operator==(const Polynom & p1, const Polynom & p2)
 {

@@ -4,24 +4,6 @@ TEST(Monom, canCreate)
 {
 	EXPECT_NO_THROW(Monom m("abc", 123, 10, 3.14));
 }
-TEST(Monom, GetPower_work)
-{
-	Monom m("abcd", 11220044, 100, -3.14);
-	ASSERT_EQ(local::GetPower(11220044, 100, 0, 4), 11);
-	ASSERT_EQ(local::GetPower(11220044, 100, 1, 4), 22);
-	ASSERT_EQ(local::GetPower(11220044, 100, 2, 4), 00);
-	ASSERT_EQ(local::GetPower(11220044, 100, 3, 4), 44);
-	std::cout << m;
-}
-TEST(Monom, GetPower_work2)
-{
-	Monom m("abcde", 103, 10, -3.14);
-	ASSERT_EQ(local::GetPower(10300, 10, 0, 5), 1);
-	ASSERT_EQ(local::GetPower(10300, 10, 1, 5), 0);
-	ASSERT_EQ(local::GetPower(10300, 10, 2, 5), 3);
-	ASSERT_EQ(local::GetPower(10300, 10, 3, 5), 0);
-	std::cout << m;
-}
 TEST(Monom, GetPowerInMonom_work)
 {
 	Monom m("abcde", 103, 10, -3.14);
@@ -50,8 +32,3 @@ TEST(Monom, monom_can_add)
 	m1 = m2 + m1;
 	EXPECT_EQ(m1, m);
 }
-/*TEST(Monom, homogeneous_monom_can_multy)
-{
-	Monom m("abcd", 10213300, 100, -3.14);
-	std::cout << m;
-}*/

@@ -15,16 +15,16 @@ private:
 	void InsMonom(Monom *m);
 	bool IsCorrect(Polynom &p);
 	bool NextMonom();
-	bool NextMonom(Monom *m);
 public:
 	Polynom();
 	Polynom(string _name, int _maxpower, List<Monom> &l);
 	Polynom(Polynom &l);
+	Polynom(int n, Monom *m);
 
 	Polynom& operator=(const Polynom &p);
 	Polynom& operator+=(Polynom &p);
 	Polynom operator+(Polynom &p);
-	Polynom operator-(const Polynom &p);
+	Polynom operator-(Polynom &p);
 	Polynom operator*(Polynom &p);
 
 	bool IsPositive() const;
