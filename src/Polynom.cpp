@@ -17,6 +17,10 @@ Polynom::Polynom(Polynom &p)
 	maxpower = p.maxpower;
 	listM = p.listM;
 }
+Polynom::Polynom(Monom & m): name(m.name), maxpower(m.maxpower)
+{
+	listM.push_back(m);
+}
 Polynom::Polynom(int n, Monom *m)
 {
 	List <Monom>l;
@@ -76,44 +80,39 @@ bool Polynom::NextMonom()
 
 Polynom& Polynom::operator+=(Polynom &pol)
 {
-	if (IsCorrect(pol))
+	if (name.length() == 0)
+		*this = pol;
+	else
 	{
-		SetCurMonom();
-		pol.SetCurMonom();
-		Monom *m1 = GetCurMonom(), *m2 = pol.GetCurMonom();
-		if (m1 && m2)
-			while (1)
+		if (IsCorrect(pol))
+		{
+			SetCurMonom();
+			pol.SetCurMonom();
+			Monom *m1 = GetCurMonom(), *m2 = pol.GetCurMonom();
+			while (m1 && m2)
 			{
-				if (*m1 < *m2)
+				if (*m1 < *m2)			// m1 < m2
 				{
 					InsMonBeforeCur(m2);
-					if (!pol.NextMonom())
-						break;
+					pol.NextMonom();
 				}
 				else if (m1->EqPow(*m2)) // m1 == m2
 				{
 					*m1 = *m1 + *m2;
-					if (!NextMonom())
-					{
-						while (pol.NextMonom())
-							InsMonAfterCur(m2);
-						break;
-					}
-					if (!pol.NextMonom())
-						break;
-				}
-				else // m1 > m2
-				{
-					InsMonAfterCur(m2);
 					NextMonom();
-					if (!NextMonom())
-					{
-						while (pol.NextMonom())
-							InsMonAfterCur(m2);
-					}
-					break;
+					pol.NextMonom();
 				}
+				else					// m1 > m2
+					NextMonom();
+				m1 = GetCurMonom();
+				m2 = pol.GetCurMonom();
 			}
+			while (m2)
+			{
+				InsMonBeforeCur(m2);
+				pol.NextMonom();
+			}
+		}
 	}
 	return *this;
 }
@@ -213,7 +212,32 @@ Polynom Polynom::operator-(Polynom & pol)
 }
 Polynom Polynom::operator*(Polynom &pol)
 {
-	return Polynom();
+	if (IsCorrect(pol))
+	{
+		pol.SetCurMonom();
+		Polynom res;
+		Monom *m = pol.GetCurMonom();
+		while (m)
+		{
+			res += *this * (*m);
+			pol.NextMonom();
+			m = pol.GetCurMonom();
+		}
+		return res;
+	}
+	throw 3;
+}
+Polynom Polynom::operator*(Monom & m2)
+{
+	Polynom res(*this);
+	res.SetCurMonom();
+	Monom *m1 = res.GetCurMonom();
+	while (m1)
+	{
+		*m1 *= m2;
+		res.NextMonom();
+	}
+	return res;
 }
 bool operator==(const Polynom & p1, const Polynom & p2)
 {

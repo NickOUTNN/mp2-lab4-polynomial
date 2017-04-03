@@ -94,11 +94,24 @@ TEST(polynom, can_add3)
 	Polynom pol2("abcde", 10, l2);
 	cout << pol1 << '+' << pol2 << '=' << pol1 + pol2 << '\n';
 }
-TEST(polynom, can_create_pol)
+TEST(polynom, can_add4)
 {
+	List<Monom> l1, l2;
 	Monom m1("abcde", 11101, 10, 3), m2("abcde", 2, 10, 3), m3("abcde", 21, 10, 5);
-	//Polynom p1(3, &m1, &m2, &m3);
-	//cout << p1;
+	l1.push_back(m2);
+	l1.push_back(m1);
+	l2.push_back(m3);
+	l2.push_back(m2);
+	Polynom pol1("abcde", 10, l1);
+	Polynom pol2("abcde", 10, l2);
+
+	Polynom res;
+	res += (Polynom)m1;
+	res += (Polynom)m2;
+	res += pol2;
+
+	cout << pol1 << '+' << pol2 << '=' << pol1 + pol2 << '\n'<<res;
+	EXPECT_EQ(res, pol2 + pol1);
 }
 
 

@@ -28,6 +28,7 @@ public:
 	Monom operator+(const Monom &m);
 	Monom operator-(const Monom &m);
 	Monom operator*(const Monom &m);
+	Monom operator*=(const Monom &m);
 
 	bool operator<(const Monom &m);
 	friend bool operator==(const Monom &m1, const Monom &m2);

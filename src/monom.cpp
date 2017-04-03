@@ -26,7 +26,7 @@ bool Monom::CorrectMulty(const Monom &m)
 	{
 		int a = GetPowerOfVar(i);
 		int b = m.GetPowerOfVar(i);
-		if ((a + b) > maxpower)
+		if ((a + b) >= maxpower)
 			return false;
 	}
 	return true;
@@ -62,14 +62,30 @@ Monom Monom::operator+(const Monom &m)
 }
 Monom Monom::operator-(const Monom &m)
 {
-	coef -= m.coef;
-	return *this;
+	Monom tmp(*this);
+	tmp.coef -= m.coef;
+	return tmp;
 }
 Monom Monom::operator*(const Monom &m)
 {
-	power += m.power;
-	coef *= m.coef;
+	Monom tmp(*this);
+	if (CorrectMulty(m))
+	{
+		tmp.power += m.power;
+		tmp.coef *= m.coef;
+		return tmp;
+	}
+	throw 1;
+}
+Monom Monom::operator*=(const Monom & m)
+{
+	if (CorrectMulty(m))
+	{
+		power += m.power;
+		coef *= m.coef;
 		return *this;
+	}
+	throw 1;
 }
 bool Monom::operator<(const Monom &m)
 {

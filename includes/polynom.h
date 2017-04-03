@@ -19,6 +19,7 @@ public:
 	Polynom();
 	Polynom(string _name, int _maxpower, List<Monom> &l);
 	Polynom(Polynom &l);
+	Polynom(Monom &m);
 	Polynom(int n, Monom *m);
 
 	Polynom& operator=(const Polynom &p);
@@ -26,6 +27,7 @@ public:
 	Polynom operator+(Polynom &p);
 	Polynom operator-(Polynom &p);
 	Polynom operator*(Polynom &p);
+	Polynom operator*(Monom &m);
 
 	bool IsPositive() const;
 	int GetLength() const;
