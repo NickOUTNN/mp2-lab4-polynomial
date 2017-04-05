@@ -9,6 +9,10 @@ private:
 	string name;
 	Monom ConvertStringToMonom(char *st, char *&end);
 	Monom* GetCurMonom() const;
+
+	static string globalName;
+	static int globalMaxPower;
+
 	void SetCurMonom();
 	void InsMonAfterCur(Monom* m);
 	void InsMonBeforeCur(Monom* m);
@@ -32,8 +36,13 @@ public:
 
 	bool IsPositive() const;
 	int GetLength() const;
+	static bool globalNameExist()
+	{
+		return (globalName.length() > 0);
+	}
+
 
 	friend bool operator==(const Polynom &p1, const Polynom &p2);
 	friend ostream& operator<<(ostream& os, const Polynom &p);
-	friend ostream& operator>>(istream& os, const Polynom &p);
+	friend istream& operator>>(istream& os,  Polynom &p);
 };

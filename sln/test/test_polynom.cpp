@@ -157,6 +157,7 @@ TEST(polynom, CanNotMulty1)
 	EXPECT_ANY_THROW(pol1 * pol2);
 }
 
+
 TEST(_end, end)
 {
 	system("pause");

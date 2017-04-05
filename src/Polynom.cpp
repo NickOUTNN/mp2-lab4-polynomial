@@ -323,3 +323,18 @@ ostream& operator<<(ostream& os, const Polynom &pol)
 	}
 	return os;
 }
+
+istream & operator >> (istream & os,  Polynom & p)
+{
+	/*if (!Polynom::globalNameExist())
+	{
+		//std::cout << "print name polynom\n";
+		//os >> Polynom::globalMaxPower;
+		//std::cout << "print max power\n";
+		//os >> Polynom::globalMaxPower;
+	}*/
+	//string s;
+	//os >> s;
+	//p = Polynom(Polynom::globalName, Polynom::globalMaxPower, s);*/
+	return os;
+}
