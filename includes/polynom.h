@@ -7,7 +7,7 @@ private:
 	List <Monom> listM;
 	int maxpower;
 	string name;
-
+	Monom ConvertStringToMonom(char *st, char *&end);
 	Monom* GetCurMonom() const;
 	void SetCurMonom();
 	void InsMonAfterCur(Monom* m);
@@ -21,6 +21,7 @@ public:
 	Polynom(Polynom &l);
 	Polynom(Monom &m);
 	Polynom(int n, Monom *m);
+	Polynom(string name, int maxp, string s);
 
 	Polynom& operator=(const Polynom &p);
 	Polynom& operator+=(Polynom &p);

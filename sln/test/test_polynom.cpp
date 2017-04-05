@@ -59,6 +59,7 @@ TEST(polynom, eq_true)
 	cout << pol1 << '\n' << pol2;
 	EXPECT_TRUE(pol1 == pol2);
 }
+
 TEST(polynom, can_add1)
 {
 	List<Monom> l1, l2;
@@ -92,7 +93,7 @@ TEST(polynom, can_add3)
 	l2.push_back(m2);
 	Polynom pol1("abcde", 10, l1);
 	Polynom pol2("abcde", 10, l2);
-	cout << pol1 << '+' << pol2 << '=' << pol1 + pol2 << '\n';
+	cout << pol1 << '+' << pol2 << " = " << pol1 + pol2 << '\n';
 }
 TEST(polynom, can_add4)
 {
@@ -110,11 +111,51 @@ TEST(polynom, can_add4)
 	res += (Polynom)m2;
 	res += pol2;
 
-	cout << pol1 << '+' << pol2 << '=' << pol1 + pol2 << '\n'<<res;
+	cout << pol1 << '+' << pol2 << " = " << pol1 + pol2 << '\n'<<res;
 	EXPECT_EQ(res, pol2 + pol1);
 }
 
-
+TEST(polynom, stringToPolynom1)
+{
+	Polynom pol("abcd", 10, "3.14*a^9*b+2d-3");
+	cout << pol;
+}
+TEST(polynom, stringToPolynom2)
+{
+	Polynom pol1("abcd", 100, "3.14*a^91*b^1+2abd-12b^3*c^12d^39+3");
+	Polynom pol2("ab", 10, "a");
+	Polynom pol3("ab", 10, "-b");
+	cout << pol1 << '\n' << pol2 << '\n' << pol3;
+}
+TEST(polynom, CanAdd5)
+{
+	Polynom pol1("ab", 10, "3b");
+	Polynom pol2("ab", 10, "a");
+	Polynom pol3("ab", 10, "-7b");
+	cout << pol1 + pol2 + pol3;
+}
+TEST(polynom, CanMulty1)
+{
+	Polynom pol1("ab", 10, "3b");
+	Polynom pol2("ab", 10, "-2*a");
+	Polynom pol3("ab", 10, "-6*ab");
+	cout << pol1 * pol2;
+	EXPECT_EQ(pol1 * pol2, pol3);
+}
+TEST(polynom, CanMulty2)
+{
+	Polynom pol1("abc", 10, "3.14a^2b");
+	Polynom pol2("abc", 10, "-2*a*c^9");
+	Polynom pol3("abc", 10, "-6.28*a^3bc^9");
+	cout << pol1 * pol2;
+	EXPECT_EQ(pol1 * pol2, pol3);
+}
+TEST(polynom, CanNotMulty1)
+{
+	Polynom pol1("abc", 10, "3.14a^2b");
+	Polynom pol2("abc", 10, "-2*a^9*c^9");
+	EXPECT_ANY_THROW(pol1 * pol2);
+}
 
 TEST(_end, end)
 {

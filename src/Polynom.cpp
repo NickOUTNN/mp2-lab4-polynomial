@@ -28,6 +28,21 @@ Polynom::Polynom(int n, Monom *m)
 		l.push_back(m[i]);
 	Polynom(m->name, m->maxpower, l);
 }
+Polynom::Polynom(string n, int maxp, string s)
+{
+	Polynom pol;
+	name = n;
+	maxpower = maxp;
+
+	char *st = &s[0];
+	char *end = st;
+
+	while (*end != '\0')
+	{
+		*this += (Polynom)ConvertStringToMonom(st, end);
+		st = end;
+	}
+}
 Polynom& Polynom::operator=(const Polynom &p)
 {
 	if (this == &p)
@@ -46,6 +61,49 @@ bool Polynom::IsPositive() const
 int Polynom::GetLength() const
 {
 	return listM.length;
+}
+Monom Polynom::ConvertStringToMonom(char *st, char *& end)
+{
+	double coef = strtod(st, &end);
+	st = end;
+	if (coef == 0)
+		if (*st == '-')
+		{
+			coef = -1;
+			st++;
+			end++;
+		}
+		else if (*st >= 'a' <= 'z')
+			coef = 1;
+		else throw 5;
+
+	Monom m(name, 0, maxpower, coef);
+	char tmp;
+	int index;
+	tmp = *end;
+	while (tmp == '*' || tmp >= 'a' && tmp <= 'z' &&  tmp != '\0')
+	{
+		if (tmp == '*')
+		{
+			end++;
+			st = end;
+		}
+		else if (*(end + 1) == '^')
+		{
+			st = end + 2;
+			int k = strtol(st, &end, 10);
+			m.SetPowerOfVar(tmp, k);
+		}
+		else if (*(end + 1) =='\0' || *(end + 1) >= 'a' && *(end + 1) <= 'z' || *(end + 1) == '*' || *(end + 1) == '+' || *(end + 1) == '-')
+		{
+			m.SetPowerOfVar(tmp, 1);
+			end++;
+		}
+		tmp = *end;
+	}
+	if (tmp == '+' || tmp == '-' || tmp == '\0')
+		return m;
+	throw 5;
 }
 Monom* Polynom::GetCurMonom() const
 {
@@ -111,6 +169,7 @@ Polynom& Polynom::operator+=(Polynom &pol)
 			{
 				InsMonBeforeCur(m2);
 				pol.NextMonom();
+				m2 = pol.GetCurMonom();
 			}
 		}
 	}
@@ -236,6 +295,7 @@ Polynom Polynom::operator*(Monom & m2)
 	{
 		*m1 *= m2;
 		res.NextMonom();
+		m1 = res.GetCurMonom();
 	}
 	return res;
 }
@@ -256,7 +316,8 @@ ostream& operator<<(ostream& os, const Polynom &pol)
 	while (p1 != 0)
 	{
 		m1 = &(p1->data);
-		if (m1->IsPositive()) os << '+';
+		if (m1->IsPositive()) os << " + ";
+		else os << " ";
 		os << *m1;
 		p1 = p1->next;
 	}

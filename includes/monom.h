@@ -23,6 +23,7 @@ public:
 	bool EqPow(const Monom &m);
 	bool IsPositive();
 	int GetPowerOfVar(int index) const;
+	void SetPowerOfVar(char var, int pow);
 
 	Monom& operator=(const Monom &m);
 	Monom operator+(const Monom &m);

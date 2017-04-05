@@ -60,7 +60,7 @@ public:
 	{
 		preCursor = cursor;
 		if (cursor != 0)
-		cursor = cursor->next;
+			cursor = cursor->next;
 		return (cursor != 0);
 	}
 

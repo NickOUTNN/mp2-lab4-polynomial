@@ -44,6 +44,15 @@ int Monom::GetPowerOfVar(int index) const
 	return ((power % (int)pow(maxpower, name.length() - index)) / (int)pow(maxpower, name.length() - index - 1));
 }
 
+void Monom::SetPowerOfVar(char var, int pow1)
+{
+	int num = -1;
+	num = name.find(var);
+	power += (int)pow(maxpower, name.length() - num - 1)*pow1;
+	if (num == -1)
+		throw 4;
+}
+
 Monom& Monom::operator=(const Monom &m)
 {
 	if (this == &m)
@@ -113,7 +122,7 @@ ostream& operator<<(ostream& os, const Monom &m)
 		int curP = m.GetPowerOfVar(i);
 		if (curP != 0)
 		{
-			if (m.coef != 1 && i!= 0)
+			if (m.coef != 1)
 				os << '*'; //вывод умножения между переменными
 
 			os << m.name[i];
