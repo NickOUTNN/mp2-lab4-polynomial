@@ -22,7 +22,7 @@ private:
 public:
 	Polynom();
 	Polynom(string _name, int _maxpower, List<Monom> &l);
-	Polynom(Polynom &l);
+	Polynom(const Polynom &l);
 	Polynom(Monom &m);
 	Polynom(int n, Monom *m);
 	Polynom(string name, int maxp, string s);
@@ -34,15 +34,45 @@ public:
 	Polynom operator*(Polynom &p);
 	Polynom operator*(Monom &m);
 
+	static void ReadGl()
+	{
+		if (!globalNameExist())
+		{
+			std::cout << "print name polynom\n";
+			std::cin >> globalName;
+			std::cout << "print max power\n";
+			std::cin >> globalMaxPower;
+		}
+	}
 	bool IsPositive() const;
 	int GetLength() const;
 	static bool globalNameExist()
 	{
 		return (globalName.length() > 0);
 	}
-
+	static void ReadGL()
+	{
+		std::cout << "print name polynom\n";
+		std::cin >> Polynom::globalName;
+		std::cout << "print max power\n";
+		std::cin >> Polynom::globalMaxPower;
+	}
 
 	friend bool operator==(const Polynom &p1, const Polynom &p2);
 	friend ostream& operator<<(ostream& os, const Polynom &p);
-	friend istream& operator>>(istream& os,  Polynom &p);
+	friend istream& operator>>(istream& is, Polynom &p)
+	{
+		if (!Polynom::globalNameExist())
+		{
+		std::cout << "print name polynom\n";
+		is >> Polynom::globalName;
+		std::cout << "print max power\n";
+		is >> Polynom::globalMaxPower;
+		std::cout << "print polynom\n";
+		}
+		string s;
+		is >> s;
+		p = Polynom(Polynom::globalName, Polynom::globalMaxPower, s);
+		return is;
+	}
 };

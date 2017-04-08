@@ -1,6 +1,8 @@
 #include "polynom.h"
 #define NodeM Node<Monom> 
 #define curMon GetCurMonom()
+string Polynom::globalName = "";
+int Polynom::globalMaxPower = 0;
 Polynom::Polynom() : name(""), maxpower(0)
 {
 	Monom m;
@@ -11,7 +13,7 @@ Polynom::Polynom(string _name, int _maxpower, List<Monom> &l): name(_name), maxp
 {
 	l.setCursor();
 }
-Polynom::Polynom(Polynom &p)
+Polynom::Polynom(const Polynom &p)
 {
 	name = p.name;
 	maxpower = p.maxpower;
@@ -73,13 +75,18 @@ Monom Polynom::ConvertStringToMonom(char *st, char *& end)
 			st++;
 			end++;
 		}
-		else if (*st >= 'a' <= 'z')
+		else if (*st == '+')
+		{
+			coef = 1;
+			st++;
+			end++;
+		}
+		else if (*st >= 'a' && *st <= 'z')
 			coef = 1;
 		else throw 5;
 
 	Monom m(name, 0, maxpower, coef);
 	char tmp;
-	int index;
 	tmp = *end;
 	while (tmp == '*' || tmp >= 'a' && tmp <= 'z' &&  tmp != '\0')
 	{
@@ -321,20 +328,5 @@ ostream& operator<<(ostream& os, const Polynom &pol)
 		os << *m1;
 		p1 = p1->next;
 	}
-	return os;
-}
-
-istream & operator >> (istream & os,  Polynom & p)
-{
-	/*if (!Polynom::globalNameExist())
-	{
-		//std::cout << "print name polynom\n";
-		//os >> Polynom::globalMaxPower;
-		//std::cout << "print max power\n";
-		//os >> Polynom::globalMaxPower;
-	}*/
-	//string s;
-	//os >> s;
-	//p = Polynom(Polynom::globalName, Polynom::globalMaxPower, s);*/
 	return os;
 }
