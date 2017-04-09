@@ -24,6 +24,7 @@ public:
 	bool IsPositive();
 	int GetPowerOfVar(int index) const;
 	void SetPowerOfVar(char var, int pow);
+	double Calculate(double *points);
 
 	Monom& operator=(const Monom &m);
 	Monom operator+(const Monom &m);
@@ -35,6 +36,5 @@ public:
 	friend bool operator==(const Monom &m1, const Monom &m2);
 	friend bool operator!=(const Monom &m1, const Monom &m2);
 	friend ostream& operator<<(ostream& os, const Monom &m);
-	friend ostream& operator>>(istream& os, const Monom &m);
 	friend class Polynom;
 };

@@ -4,11 +4,10 @@
 #include <map>
 #define pol(n, p) std::pair<int,Polynom>(n,p)
 #define polM(index) m.find(index)->second
+#define polName(it) it->second.GetName()
 using std::map;
 using std::cout;
 using std::cin;
-
-
 
 int main()
 {
@@ -17,8 +16,8 @@ int main()
 	Polynom p;
 	setlocale(LC_ALL, "Russian");
 	string s;
-	string menu = {"1 Добавить многочлен \n2 Удалить многочлен\n"};
-	menu += "3 Выполнить арифмитическое действие\n4 Задать формат полинома\n5 Вывести список полиномов\n";
+	string menu = {"1 Добавить многочлен \n2 Удалить многочлен\n3 Выполнить арифмитическое действие\n"};
+	menu += "4 Задать формат полинома\n5 Вывести формат полинома\n6 Вывести список полиномов\n7 Вычислить полином в точке\nq Выход\n";
 	while (s != "q")
 	{
 		cout << menu;
@@ -78,6 +77,7 @@ int main()
 				default: cout << "there is no this operator";			break;
 				}
 			}
+			else cout << "polynoms don't found\n";
 
 		}
 		else if (s == "4")
@@ -88,10 +88,41 @@ int main()
 		else if (s == "5")
 		{
 			system("cls");
+			Polynom::PrintGB();
+		}
+		else if (s == "6")
+		{
+			system("cls");
+			cout << "LIST:\nnumber polynom\n";
+			for (auto el : m)
+				cout << el.first << " " << el.second << "\n";
+		}		
+		else if (s == "7")
+		{
+			system("cls");
 			cout << "LIST: number polynom\n";
 			for (auto el : m)
 				cout << el.first << " " << el.second << "\n";
+			int num;
+			cout << "print number of polynom\n";
+			cin >> num;
+			auto it = m.find(num);
+			if (it != m.end())
+			{
+				cout << "print value of variable\n";
+				string name = polName(it);
+				double *points = new double[name.length()];
+				for (int i = 0; i < name.length(); i++)
+				{
+					cout << "val of " << name[i] <<' ';
+					cin >> points[i];
+				}
+				cout << "answer = " << it->second.Calculate(points)<<'\n';
+				delete[] points;
+			}
+			else cout << "polynom don't found\n";
 		}
+		else system("cls");
 
 	}
 	return 0;

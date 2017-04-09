@@ -34,21 +34,23 @@ public:
 	Polynom operator*(Polynom &p);
 	Polynom operator*(Monom &m);
 
-	static void ReadGl()
-	{
-		if (!globalNameExist())
-		{
-			std::cout << "print name polynom\n";
-			std::cin >> globalName;
-			std::cout << "print max power\n";
-			std::cin >> globalMaxPower;
-		}
-	}
 	bool IsPositive() const;
 	int GetLength() const;
+	string GetName() const;
+	double Calculate(double *points);
+
 	static bool globalNameExist()
 	{
 		return (globalName.length() > 0);
+	}
+	static void PrintGB()
+	{
+		string s = "polynom name "; 
+		if (globalName == "")
+			s += "empty";
+		else s += globalName;
+		s += ',';
+		std::cout << s << " max pow = " << globalMaxPower << "\n\n";
 	}
 	static void ReadGL()
 	{
@@ -57,6 +59,7 @@ public:
 		std::cout << "print max power\n";
 		std::cin >> Polynom::globalMaxPower;
 	}
+
 
 	friend bool operator==(const Polynom &p1, const Polynom &p2);
 	friend ostream& operator<<(ostream& os, const Polynom &p);

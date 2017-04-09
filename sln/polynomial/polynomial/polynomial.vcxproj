@@ -19,11 +19,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\includes\func.h" />
     <ClInclude Include="..\..\..\includes\list.h" />
     <ClInclude Include="..\..\..\includes\monom.h" />
     <ClInclude Include="..\..\..\includes\polynom.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\src\func.cpp" />
     <ClCompile Include="..\..\..\src\monom.cpp" />
     <ClCompile Include="..\..\..\src\Polynom.cpp" />
   </ItemGroup>

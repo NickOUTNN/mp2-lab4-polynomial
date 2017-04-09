@@ -64,6 +64,23 @@ int Polynom::GetLength() const
 {
 	return listM.length;
 }
+string Polynom::GetName() const
+{
+	return name;
+}
+double Polynom::Calculate(double * points)
+{
+	double val = 0;
+	SetCurMonom();
+	Monom *m1 = GetCurMonom();
+	while (m1)
+	{
+		val += m1->Calculate(points);
+		NextMonom();	
+		m1 = GetCurMonom();
+	}
+	return val;
+}
 Monom Polynom::ConvertStringToMonom(char *st, char *& end)
 {
 	double coef = strtod(st, &end);

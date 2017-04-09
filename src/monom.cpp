@@ -1,4 +1,5 @@
 #include "monom.h"
+#include "func.h"
 Monom::Monom(): name("") ,power(0), maxpower(0), coef(0){}
 Monom::Monom(Monom & m): name(m.name), power(m.power), maxpower(m.maxpower), coef(m.coef){}
 Monom::Monom(string _name, int _power, int _maxpower, double _coef): 
@@ -51,6 +52,21 @@ void Monom::SetPowerOfVar(char var, int pow1)
 	power += (int)pow(maxpower, name.length() - num - 1)*pow1;
 	if (num == -1)
 		throw 4;
+}
+
+double QuickPow(double base, int pow)
+{
+	if (pow == 0)
+		return 1;
+	int n = 1;
+	return qp(base, pow, 1, n);
+}
+double Monom::Calculate(double * points)
+{
+	double val = 1;
+	for (int i = 0; i < name.length(); i++)
+		val *= QuickPow(points[i], GetPowerOfVar(i));
+	return val * coef;
 }
 
 Monom& Monom::operator=(const Monom &m)
@@ -135,7 +151,3 @@ ostream& operator<<(ostream& os, const Monom &m)
 	}
 	return os;
 }
-/*ostream& operator>>(istream& os, const Monom &m)
-{
-
-}*/
