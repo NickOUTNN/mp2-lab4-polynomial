@@ -127,6 +127,11 @@ TEST(polynom, stringToPolynom2)
 	Polynom pol3("ab", 10, "-b");
 	cout << pol1 << '\n' << pol2 << '\n' << pol3;
 }
+TEST(polynom, stringToPolynom3)
+{
+	Polynom pol1("abc", 100, "3.14a^17b-36b");
+	cout << pol1 ;
+}
 TEST(polynom, CanAdd5)
 {
 	Polynom pol1("ab", 10, "3b");
