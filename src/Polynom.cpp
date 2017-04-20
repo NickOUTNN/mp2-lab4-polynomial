@@ -1,6 +1,10 @@
 #include "polynom.h"
 #define NodeM Node<Monom> 
 #define curMon GetCurMonom()
+
+#include <iostream>
+using std::cout;
+
 string Polynom::globalName = "";
 int Polynom::globalMaxPower = 0;
 Polynom::Polynom() : name(""), maxpower(0)
@@ -59,6 +63,10 @@ bool Polynom::IsPositive() const
 	if (!listM.isEmpty())
 		return listM.GetpTop()->data.IsPositive();
 	else return false;
+}
+bool Polynom::IsEmpty() const
+{
+	return listM.isEmpty();
 }
 int Polynom::GetLength() const
 {
@@ -151,6 +159,10 @@ void Polynom::InsMonom(Monom * m)
 {
 	listM.push_back(*m);
 }
+void Polynom::DeleteCur()
+{
+	listM.deleteCursor();
+}
 bool Polynom::IsCorrect(Polynom & p)
 {
 	return (name == p.name && maxpower == p.maxpower);
@@ -181,6 +193,8 @@ Polynom& Polynom::operator+=(Polynom &pol)
 				else if (m1->EqPow(*m2)) // m1 == m2
 				{
 					*m1 = *m1 + *m2;
+					if (m1->IsEmpty() && this->listM.have2Monom())
+						pol.DeleteCur();
 					NextMonom();
 					pol.NextMonom();
 				}
@@ -216,7 +230,9 @@ Polynom Polynom::operator+(Polynom &pol)
 			}
 			else if (m1->EqPow(*m2))
 			{
-				polr.InsMonom(&(*m1 + *m2));
+				Monom tmp = *m1 + *m2;
+				if (!tmp.IsEmpty() || polr.IsEmpty())
+					polr.InsMonom(&tmp);
 				pol.NextMonom();
 				NextMonom();
 			}
@@ -256,18 +272,20 @@ Polynom Polynom::operator-(Polynom & pol)
 		Monom *m1 = GetCurMonom(), *m2 = pol.GetCurMonom();
 		while (m1 && m2)
 		{
-			if (*m1 < *m2)
+			if (*m1 < *m2) //m1 < m2
 			{
 				polr.InsMonom(m2);
 				pol.NextMonom();
 			}
-			else if (m1->EqPow(*m2))
+			else if (m1->EqPow(*m2)) // m1 == m2
 			{
-				polr.InsMonom(&(*m1 - *m2));
+				Monom tmp = *m1 - *m2;
+				if (!tmp.IsEmpty() || polr.IsEmpty())
+					polr.InsMonom(&tmp);
 				pol.NextMonom();
 				NextMonom();
 			}
-			else
+			else // m2 > m1
 			{
 				polr.InsMonom(m1);
 				NextMonom();

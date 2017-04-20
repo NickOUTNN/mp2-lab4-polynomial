@@ -36,8 +36,16 @@ bool Monom::IsPositive()
 {
 	return (coef > 0);
 }
-bool Monom::EqPow(const Monom &m)
+bool Monom::IsEmpty() const
 {
+	return coef == 0;
+}
+bool Monom::EqPow(Monom &m)
+{
+	if (coef == 0)
+		power = m.power;
+	if (m.coef == 0)
+		m.power = power;
 	return (power == m.power);
 }
 int Monom::GetPowerOfVar(int index) const
@@ -126,26 +134,29 @@ bool operator!=(const Monom &m1, const Monom &m2)
 }
 ostream& operator<<(ostream& os, const Monom &m)
 {
-	if (m.coef == 0)
+	if (&m)
 	{
-		os << '0';
-		return os;
-	}
-	if (m.coef != 1)
-		os << m.coef;
-	for (int i = 0; i < m.name.length(); i++)
-	{
-		int curP = m.GetPowerOfVar(i);
-		if (curP != 0)
+		if (m.coef == 0)
 		{
-			if (m.coef != 1)
-				os << '*'; //вывод умножения между переменными
-
-			os << m.name[i];
-			if (curP != 1)
+			os << '0';
+			return os;
+		}
+		if (m.coef != 1)
+			os << m.coef;
+		for (int i = 0; i < m.name.length(); i++)
+		{
+			int curP = m.GetPowerOfVar(i);
+			if (curP != 0)
 			{
-				os << '^';
-				os << curP;
+				if (m.coef != 1)
+					os << '*'; //вывод умножения между переменными
+
+				os << m.name[i];
+				if (curP != 1)
+				{
+					os << '^';
+					os << curP;
+				}
 			}
 		}
 	}

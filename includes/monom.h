@@ -20,8 +20,9 @@ public:
 	Monom(string _name, int _power, int _maxpower, double _coef);
 	bool IsCorrect(const Monom &m);
 	bool CorrectMulty(const Monom &m);
-	bool EqPow(const Monom &m);
+	bool EqPow(Monom &m);
 	bool IsPositive();
+	bool IsEmpty() const;
 	int GetPowerOfVar(int index) const;
 	void SetPowerOfVar(char var, int pow);
 	double Calculate(double *points);

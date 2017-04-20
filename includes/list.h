@@ -29,6 +29,14 @@ public:
 	}
 
 	bool isEmpty() const { return (head == 0); }
+	bool have2Monom() const 
+	{ 
+		if (head)
+		{
+			return head->next;
+		}
+		return false;
+	}
 
 	Data quick_pop_front()
 	{
@@ -95,6 +103,17 @@ public:
 	{
 		cursor = head;
 		preCursor = 0;
+	}
+	void deleteCursor()
+	{
+		if (cursor)
+		{
+			Node<Data> *tmp = cursor;
+			cursor = cursor->next;
+			delete tmp;
+			if (preCursor)
+				preCursor->next = cursor;
+		}
 	}
 	void push_after_cursor(Data *p)
 	{

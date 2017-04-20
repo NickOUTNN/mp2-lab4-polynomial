@@ -17,6 +17,7 @@ private:
 	void InsMonAfterCur(Monom* m);
 	void InsMonBeforeCur(Monom* m);
 	void InsMonom(Monom *m);
+	void DeleteCur();
 	bool IsCorrect(Polynom &p);
 	bool NextMonom();
 public:
@@ -35,6 +36,7 @@ public:
 	Polynom operator*(Monom &m);
 
 	bool IsPositive() const;
+	bool IsEmpty() const;
 	int GetLength() const;
 	string GetName() const;
 	double Calculate(double *points);
